@@ -5,15 +5,13 @@ class Main {
         String[][] gameBoard = {{" ", " ", " "}, {" ", " ", " "}, {" ", " ", " "}};
         int position;
         int numTurns = 0;
-        String x = "X";
-        String o = "O";
         String player;
 
         while (numTurns < 9 && !checkForWins(gameBoard)) {
             if (numTurns % 2 == 0) {
-                player = x;
+                player = "X";
             } else {
-                player = o;
+                player = "O";
             }
             position = getUserSel();
             playRound(gameBoard, position, player);
@@ -24,10 +22,22 @@ class Main {
         }
 
     public static boolean checkForWins(String[][] gameBoard) {
-        
-        return checkRowWins(gameBoard) || checkColWins(gameBoard);   
+        return checkRowWins(gameBoard) || checkColWins(gameBoard) || checkDiagonalWins(gameBoard);
     }
 
+    public static boolean checkDiagonalWins(String[][] gameBoard){
+        if (gameBoard[1][1].equals(" ")) {
+            return false;
+        } else {
+            if (gameBoard[0][0].equals(gameBoard[1][1]) && gameBoard[0][0].equals(gameBoard[2][2])) {
+                return true;
+            } else if (gameBoard[0][2].equals(gameBoard[1][1]) && gameBoard[0][0].equals(gameBoard[2][0])) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
     public static boolean checkRowWins(String[][] gameBoard) {
         boolean winner = false;
         for (int i = 0; i<3; i++) {
